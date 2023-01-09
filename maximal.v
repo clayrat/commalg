@@ -34,12 +34,12 @@ Notation quotRI := (rquot_ringQuotType kI).
 
 Lemma maximal_quot_field : maximal_idealr I -> Field.mixin_of quotRI.
 Proof.
-  move=> maximalI x x_neq_0. rewrite /in_mem //=.
+  move=> maximalI x x_neq_0; rewrite inE.
 Admitted.
 
 Lemma quot_field_maximal : Field.mixin_of quotRI -> maximal_idealr I.
 Proof.
-  rewrite /Field.mixin_of /in_mem //= => quot_fieldAx.
+  rewrite /Field.mixin_of /in_mem /= => quot_fieldAx.
 Admitted.
 End maximal_equiv.
 
@@ -51,25 +51,25 @@ Coercion idealS : ideal >-> set.
 
 (* Section IdealOrder.
    Implicit Types (X Y : set ideal).
-   
+
    Lemma setI_meet X Y : `[< X `<=` Y >] = (X `&` Y == X).
    Proof. by apply/asboolP/eqP; rewrite setIidPl. Qed.
-   
+
    Fact SetOrder_joinKI (Y X : set ideal) : X `&` (X `|` Y) = X.
    Proof. Admitted.
-   
+
    Fact SetOrder_meetKU (Y X : set ideal) : X `|` (X `&` Y) = X.
    Proof. Admitted.
-   
+
    Fact SetOrder_ldist : left_distributive (@setI ideal) setU.
    Admitted.
-   
+
    Definition orderMixin := @MeetJoinMixin _ _ _ setI setU setI_meet
    (fun _ _ => erefl) (@setIC _) (@setUC _) (@setIA _) (@setUA _)
    SetOrder_joinKI SetOrder_meetKU SetOrder_ldist setIid.
-   
+
    Canonical idealSet_porderType := POrderType set_display _ orderMixin.
-   End IdealOrder. 
+   End IdealOrder.
  *)
 
 (* R := subset *)
@@ -83,15 +83,15 @@ Proof.
   subst; congr MkIdeal. apply: Prop_irrelevance.
 Qed.
 
-Lemma has_upper_bound (P : set ideal) : 
+Lemma has_upper_bound (P : set ideal) :
   total_on P subset -> exists (S : ideal), forall (I : ideal), P I -> I `<=` S.
-Proof. 
+Proof.
   rewrite /total_on.
-  move=> is_total. 
+  move=> is_total.
 Admitted.
 
 Lemma pred_of_setE {T} (S : {pred T}) : pred_of_set S = S.
-Proof. rewrite /pred_of_set funeqE => x //=. exact: asboolbK. Qed.
+Proof. rewrite /pred_of_set funeqE => x //=. exact: asboolb. Qed.
 
 (* Krull's theorem: every non-trivial ring has a maximal ideal *)
 Theorem has_maximal_ideal : exists I : {pred R}, maximal_idealr I.
